@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+body {
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+}
+.gallery {
+	height: 100vh;
+	margin: 0;
+	overflow-y: scroll;
+	padding: 0;
+	scroll-snap-type: y mandatory;
+}
+.gallery-item {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	justify-content: center;
+	scroll-snap-align: start;
+	position: relative;
+	width: 100%;
+}
+.gallery-item-detail {
+	max-width: 72px;
+	left: 8px;
+	position: absolute;
+	top: 8px;
+}
+.gallery-item-detail p {
+	margin-left: 4px;	
+	margin-top: 4px;
+}
+.gallery-item-detail-note {
+	opacity: 1;
+	transition: opacity 1s;
+}
+.gallery-item-detail-title {
+	margin-bottom: 0;
+}
+.gallery-item-detail-note p {
+	display: inline-block;
+}
+.gallery-item-display {
+	/*
+		align-items: center;
+		display: flex;
+		height: 100%;
+		justify-content: center;
+		scroll-snap-align: start;
+		width: 100%;
+	*/
+	display: block;
+	height: calc(100% - 56px);
+	scroll-snap-align: start;
+	top: 4px;
+	position: absolute;
+	width: fit-content;
+}
+/* .gallery-item-display-drawing, */
+.gallery-item-display-photo {
+	/*
+		height: calc(100% - 56px);
+		position: absolute;
+		top: 4px;
+		transition: opacity 1s;
+	*/
+	height: 100%;
+	transition: opacity 1s;
+}
+.gallery-item-display--invisible {
+	opacity: 0;
+}
+.gallery-item-order {
+	bottom: 4px;
+	position: absolute;
+	right: 8px;
+}
+.gallery-item-order-stock {
+	margin: 0;
+	text-align: right;
+}
+.gallery-item-order-add {
+	background: #000;
+	border: #000;
+	border-radius: 4px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 20px;
+	padding: 8px;
+}
+.gallery-item-page {
+	bottom: 4px;
+	left: 8px;
+	position: absolute;
+}
+.gallery-item-page p {
+	text-align: center;
+	margin: 0;
+}
+.gallery-item-page-control {
+	background: transparent;
+	border: 0;
+	padding: 0;
+}
+.gallery-item-page-control  {
+	display: inline-block;
+	vertical-align: middle;
+	width: 48px;
+}
+.gallery-item-page-control--down {
+	cursor: s-resize;
+}
+.gallery-item-page-control--up {
+	cursor: n-resize;
+}
+@media only screen and (min-width: 420px)  {
+	.gallery-item-detail {
+		max-width: 120px;
+	}
+}
+@media only screen and (min-width: 690px)  {
+	.gallery-item-detail {
+		max-width: none;
+	}
+}

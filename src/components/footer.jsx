@@ -4,32 +4,16 @@ import React from "react"
 const Footer = () => {
   const socials = [
     {
-      name: "GitHub",
-      url: "https://www.github.com/medusajs",
-    },
-    {
-      name: "Twitter",
-      url: "https://www.twitter.com/medusajs",
-    },
-    {
-      name: "Discord",
-      url: "https://discord.gg/ruGn9fmv9q",
-    },
+      name: "Instagram",
+      url: "https://www.instagram.com/elyse.kate.u",
+    }
   ]
 
   const internals = [
     {
-      name: "Create return",
-      to: "/create-return",
-    },
-    {
       name: "FAQ",
       to: "/faq",
-    },
-    {
-      name: "Terms & Conditions",
-      to: "/terms-and-conditions",
-    },
+    }
   ]
 
   return (
