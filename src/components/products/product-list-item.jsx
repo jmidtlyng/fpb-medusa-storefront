@@ -2,6 +2,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import React, { useMemo } from "react"
 import { usePrice } from "../../hooks/use-price"
 import { useRegion } from "../../hooks/use-region"
+import { getSrc } from "gatsby-plugin-image"
 
 const ProductListItem = ({ product }) => {
   const {
@@ -41,9 +42,10 @@ const ProductListItem = ({ product }) => {
           </div>
         </div>
         <div class='gallery-item-display'>
-          <GatsbyImage image={product.thumbnail?.childImageSharp?.gatsbyImageData}
-                        alt={product.title}
-                        className="w-auto h-full object-center object-cover gallery-item-display-photo"/>
+          <img
+              src={getSrc(product.thumbnail)}
+              alt={product.title}
+              className="gallery-item-display-photo"/>
         </div>
         <div class="gallery-item-order">
           {/*
