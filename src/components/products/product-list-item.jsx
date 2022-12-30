@@ -20,26 +20,6 @@ const ProductListItem = ({ product }) => {
     <div class='gallery-item'>
       <div class='gallery-item-detail'>
           <p class='gallery-item-detail-title'>{ product.title }</p>
-          <div class='gallery-item-detail-note'>
-            <p>
-              <text>Loading images</text>
-              {/* https://codepen.io/nikhil8krishnan/pen/rVoXJa */}
-              <svg version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg"
-                  x="0px" y="0px"
-                  enable-background="new 0 0 0 0"
-                  style={{width: '12px'}} viewBox="0 0 40 12">
-                <circle fill="#000" stroke="none" cx="6" r="6" cy="6">
-                  <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"></animate>    
-                </circle>
-                <circle fill="#000" stroke="none" r="6" cy="6" cx="20">
-                  <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"></animate>       
-                </circle>
-                <circle fill="#000" stroke="none" r="6" cy="6" cx="34">
-                  <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"></animate>     
-                </circle>
-              </svg>
-            </p>
-          </div>
         </div>
         <div class='gallery-item-display'>
           <img
