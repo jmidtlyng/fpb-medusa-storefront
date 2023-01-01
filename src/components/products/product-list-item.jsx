@@ -1,39 +1,63 @@
-import { GatsbyImage } from "gatsby-plugin-image"
 import React, { useMemo } from "react"
+import QuantitySelector from "./quantity-selector"
+import { useCart } from "../../hooks/use-cart"
+import { useProduct } from "../../hooks/use-product"
 import { usePrice } from "../../hooks/use-price"
 import { useRegion } from "../../hooks/use-region"
 import { getSrc } from "gatsby-plugin-image"
 
 const ProductListItem = ({ product }) => {
   const {
-    actions: { getFromPrice },
-  } = usePrice()
+    loading,
+    actions: { addItem },
+  } = useCart()
+  
+  const {
+    variant,
+    quantity,
+    actions: {
+      increaseQuantity,
+      decreaseQuantity,
+      resetOptions,
+    },
+  } = useProduct(product)
 
   const { region } = useRegion()
-
-  const fromPrice = useMemo(() => {
-    return getFromPrice(product, region?.currency_code, region?.tax_rate)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product, region])
+  
+  const handleAddToCart = async () => {
+    await addItem({ variant_id: variant.id, quantity })
+    resetOptions()
+  }
 
   return (
     <div class='gallery-item'>
       <div class='gallery-item-detail'>
-          <p class='gallery-item-detail-title'>{ product.title }</p>
+        <p class='gallery-item-detail-title'>{ product.title }</p>
+      </div>
+      <div class='gallery-item-display'>
+        <img  src={getSrc(product.thumbnail)}
+            alt={product.title}
+            className="gallery-item-display-photo"/>
+      </div>
+      <div class="gallery-item-order">
+        <div className="inline-flex mt-4">
+          <button className="btn-ui mr-2 px-12"
+              onClick={() => handleAddToCart()}
+              disabled={loading}>
+            Add to bag
+          </button>
+          <QuantitySelector
+            quantity={quantity}
+            increment={increaseQuantity}
+            decrement={decreaseQuantity}
+          />
         </div>
-        <div class='gallery-item-display'>
-          <img
-              src={getSrc(product.thumbnail)}
-              alt={product.title}
-              className="gallery-item-display-photo"/>
-        </div>
-        <div class="gallery-item-order">
-          {/*
-            <p class="gallery-item-order-stock">{{bookmark.stock}} avaible</p>
-            <button class="gallery-item-order-add"
-                    hx-post='/add-to-cart/{{bookmark.id}}'>Add to order</button>
-          */}
-        </div>
+        {/*
+          <p class="gallery-item-order-stock">{{bookmark.stock}} avaible</p>
+          <button class="gallery-item-order-add"
+                  hx-post='/add-to-cart/{{bookmark.id}}'>Add to order</button>
+        */}
+      </div>
     </div>
   )
 }
