@@ -1,32 +1,36 @@
-import React, { useMemo } from "react"
+import React from "react"
 import QuantitySelector from "./quantity-selector"
 import { useCart } from "../../hooks/use-cart"
-import { useProduct } from "../../hooks/use-product"
 import { usePrice } from "../../hooks/use-price"
 import { useRegion } from "../../hooks/use-region"
 import { getSrc } from "gatsby-plugin-image"
 
 const ProductListItem = ({ product }) => {
+  const [quantity, setQuantity] = React.useState(1)
+
   const {
     loading,
     actions: { addItem },
   } = useCart()
   
-  const {
-    variant,
-    quantity,
-    actions: {
-      increaseQuantity,
-      decreaseQuantity,
-      resetOptions,
-    },
-  } = useProduct(product)
-
-  const { region } = useRegion()
+  const specificProduct = product.variants[0]
   
+  const region = useRegion()
+  
+  const currencyCode = region.currency_code
+  console.log(product)
+  
+  console.log(product)
+  console.log(specificProduct)
+  console.log(region)
+  
+  
+  const price = specificProduct.prices[0]
+                ? specificProduct.prices.find(p => p.currency_code === region.currency_code)
+                : undefined
+                                
   const handleAddToCart = async () => {
-    await addItem({ variant_id: variant.id, quantity })
-    resetOptions()
+    await addItem({ variant_id: specificProduct.id, quantity: 1 })
   }
 
   return (
@@ -41,18 +45,19 @@ const ProductListItem = ({ product }) => {
       </div>
       <div class="gallery-item-order">
         <div className="inline-flex mt-4">
+          <span>{quantity}</span>
           <button className="btn-ui mr-2 px-12"
               onClick={() => handleAddToCart()}
               disabled={loading}>
-            Add to bag
+            Add to order
           </button>
+        </div>
+        {/*
           <QuantitySelector
             quantity={quantity}
             increment={increaseQuantity}
             decrement={decreaseQuantity}
           />
-        </div>
-        {/*
           <p class="gallery-item-order-stock">{{bookmark.stock}} avaible</p>
           <button class="gallery-item-order-add"
                   hx-post='/add-to-cart/{{bookmark.id}}'>Add to order</button>

@@ -33,10 +33,17 @@ export const query = graphql`
             }
           }
           variants {
+            id
             prices {
               amount
               currency_code
             }
+          }
+          options {
+            values {
+              value
+            }
+            title
           }
         }
       }
