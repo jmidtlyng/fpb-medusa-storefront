@@ -9,7 +9,7 @@ const IndexPage = ({ data }) => {
   const prods = data.products.edges.map(edge => edge.node)
 
   return (
-    <div class='gallery' id='gallery'>
+    <div className='gallery' id='gallery'>
       <SearchEngineOptimization title="Products" />
       {/* <div className="layout-base my-12 min-h-0"> */}
         {prods.map(p => {

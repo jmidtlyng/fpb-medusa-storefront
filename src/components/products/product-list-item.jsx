@@ -10,46 +10,57 @@ const ProductListItem = ({ product }) => {
 
   const {
     loading,
+    cart,
     actions: { addItem },
   } = useCart()
-  
+  // just use first variant. Going for simple design, 1 var/prod
   const specificProduct = product.variants[0]
-  
   const region = useRegion()
-  
   const currencyCode = region.currency_code
-  console.log(product)
   
-  console.log(product)
-  console.log(specificProduct)
-  console.log(region)
+  // console.log(cart)
+  // console.log(product)
+  // console.log(specificProduct)
+  // console.log(region)
   
-  
+  // match price from currency code
   const price = specificProduct.prices[0]
                 ? specificProduct.prices.find(p => p.currency_code === region.currency_code)
                 : undefined
-                                
+  // check cart. if there are items in the cart then show cart item count
+  const cartItem = cart.items.find(i => i.variant.id == specificProduct.id)
+  const quantityInCart = typeof cartItem == 'undefined' ? '' : cartItem.quantity;
+  
+  // pick out specific variant and only ever increase quant by 1                  
   const handleAddToCart = async () => {
     await addItem({ variant_id: specificProduct.id, quantity: 1 })
+  }                
+  const handleRemoveFromCart = async () => {
+    await addItem({ variant_id: specificProduct.id, quantity: -1 })
   }
 
   return (
-    <div class='gallery-item'>
-      <div class='gallery-item-detail'>
-        <p class='gallery-item-detail-title'>{ product.title }</p>
+    <div className='gallery-item'>
+      <div className='gallery-item-detail'>
+        <p className='gallery-item-detail-title'>{ product.title }</p>
       </div>
-      <div class='gallery-item-display'>
-        <img  src={getSrc(product.thumbnail)}
+      <div className='gallery-item-display'>
+        <img src={getSrc(product.thumbnail)}
             alt={product.title}
             className="gallery-item-display-photo"/>
       </div>
-      <div class="gallery-item-order">
+      <div className="gallery-item-order">
         <div className="inline-flex mt-4">
-          <span>{quantity}</span>
+          <span>{quantityInCart}</span>
           <button className="btn-ui mr-2 px-12"
               onClick={() => handleAddToCart()}
               disabled={loading}>
             Add to order
+          </button>
+          <button className="btn-ui mr-2 px-12"
+              onClick={() => handleRemoveFromCart()}
+              disabled={loading}>
+            Remove from order
           </button>
         </div>
         {/*
