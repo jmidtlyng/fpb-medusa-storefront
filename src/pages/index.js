@@ -11,11 +11,12 @@ const IndexPage = ({ data }) => {
   return (
     <div className='gallery' id='gallery'>
       <SearchEngineOptimization title="Products" />
-      {/* <div className="layout-base my-12 min-h-0"> */}
-        {prods.map(p => {
+      {/* only output products with inventory*/}
+      {prods
+        .filter(p => p.variants[0].inventory_quantity > 0)
+        .map(p => {
           return <ProductListItem product={p} key={p.handle} />
         })}
-      {/* </div> */}
     </div>
   )
 }
@@ -34,6 +35,7 @@ export const query = graphql`
           }
           variants {
             id
+            inventory_quantity
             prices {
               amount
               currency_code

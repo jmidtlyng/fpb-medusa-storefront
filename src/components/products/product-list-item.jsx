@@ -14,29 +14,37 @@ const ProductListItem = ({ product }) => {
     actions: { addItem },
   } = useCart()
   // just use first variant. Going for simple design, 1 var/prod
-  const specificProduct = product.variants[0]
+  const variant = product.variants[0]
   const region = useRegion()
   const currencyCode = region.currency_code
   
   // console.log(cart)
-  // console.log(product)
-  // console.log(specificProduct)
+  console.log(product)
+  // console.log(variant)
   // console.log(region)
   
   // match price from currency code
-  const price = specificProduct.prices[0]
-                ? specificProduct.prices.find(p => p.currency_code === region.currency_code)
+  const price = variant.prices[0]
+                ? variant.prices.find(p => p.currency_code === region.currency_code)
                 : undefined
   // check cart. if there are items in the cart then show cart item count
-  const cartItem = cart.items.find(i => i.variant.id == specificProduct.id)
-  const quantityInCart = typeof cartItem == 'undefined' ? '' : cartItem.quantity;
+  const cartItem = cart.items.find(i => i.variant.id == variant.id)
+  const quantityInCart = typeof cartItem == 'undefined' ? '' : cartItem.quantity
+  const itemIsInCart = quantityInCart > 0
+  const inventoryIsRemaining = variant.inventory_quantity > quantityInCart
   
   // pick out specific variant and only ever increase quant by 1                  
   const handleAddToCart = async () => {
-    await addItem({ variant_id: specificProduct.id, quantity: 1 })
+    // only add to cart if there is inventory to add to the cart
+    if(inventoryIsRemaining){
+      await addItem({ variant_id: variant.id, quantity: 1 })
+    }
   }                
   const handleRemoveFromCart = async () => {
-    await addItem({ variant_id: specificProduct.id, quantity: -1 })
+    // only remove if there is something in cart. Shouldnt run without cart item
+    if(itemIsInCart){
+      await addItem({ variant_id: variant.id, quantity: -1 })
+    }
   }
 
   return (
@@ -54,49 +62,20 @@ const ProductListItem = ({ product }) => {
           <span>{quantityInCart}</span>
           <button className="btn-ui mr-2 px-12"
               onClick={() => handleAddToCart()}
-              disabled={loading}>
+              disabled={loading || !inventoryIsRemaining}>
             Add to order
           </button>
-          <button className="btn-ui mr-2 px-12"
-              onClick={() => handleRemoveFromCart()}
-              disabled={loading}>
-            Remove from order
-          </button>
+          {itemIsInCart &&
+            <button className="btn-ui mr-2 px-12"
+                onClick={() => handleRemoveFromCart()}
+                disabled={loading}>
+              Remove from order
+            </button>
+          }
         </div>
-        {/*
-          <QuantitySelector
-            quantity={quantity}
-            increment={increaseQuantity}
-            decrement={decreaseQuantity}
-          />
-          <p class="gallery-item-order-stock">{{bookmark.stock}} avaible</p>
-          <button class="gallery-item-order-add"
-                  hx-post='/add-to-cart/{{bookmark.id}}'>Add to order</button>
-        */}
       </div>
     </div>
   )
 }
 
 export default ProductListItem
-/*
-  <RegionalLink to={product.handle} className="font-normal">
-    <div key={product.id} className="group relative">
-      <div className="w-full min-h-auto bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-        <GatsbyImage
-          image={product.thumbnail?.childImageSharp?.gatsbyImageData}
-          alt={product.title}
-          className="w-auto h-full object-center object-cover"
-        />
-      </div>
-      <div className="mt-4 flex justify-between">
-        <h3 className="text-sm text-gray-700">
-          <p className="font-normal">{product.title}</p>
-        </h3>
-        <p className="text-sm font-semibold text-gray-900">
-          from {fromPrice}
-        </p>
-      </div>
-    </div>
-  </RegionalLink>
-*/
