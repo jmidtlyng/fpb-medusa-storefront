@@ -1,11 +1,11 @@
 import { graphql } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+// import { StaticImage } from "gatsby-plugin-image"
 import React from "react"
 import ProductListItem from "../components/products/product-list-item"
 import SearchEngineOptimization from "../components/utility/seo"
 
 const IndexPage = ({ data }) => {
-  const { products, collections } = data
+  // const { products, collections } = data
   const prods = data.products.edges.map(edge => edge.node)
 
   return (
