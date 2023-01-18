@@ -54,8 +54,12 @@ body {
 	opacity: 0;
 }
 .gallery-item-order {
+	align-items: end;
 	bottom: 4px;
-	right: 8px;
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	right: 16px;
 }
 .gallery-item-order-stock {
 	margin: 0;
@@ -70,6 +74,14 @@ body {
 	font-size: 20px;
 	padding: 8px;
 }
+.gallery-item-order-remove {
+	background: none;
+	cursor: pointer;
+	border: none;
+	margin-bottom: 16px;
+	text-decoration: underline;
+	width: fit-content;
+}
 .gallery-item-page {
 	bottom: 4px;
 	left: 8px;
@@ -82,10 +94,8 @@ body {
 .gallery-item-page-control {
 	background: transparent;
 	border: 0;
-	padding: 0;
-}
-.gallery-item-page-control  {
 	display: inline-block;
+	padding: 0;
 	vertical-align: middle;
 	width: 48px;
 }

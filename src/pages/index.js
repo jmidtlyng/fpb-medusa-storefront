@@ -6,20 +6,20 @@ import SearchEngineOptimization from "../components/utility/seo"
 
 const IndexPage = ({ data }) => {
   // const { products, collections } = data
-  const prods = data.products.edges.map(edge => edge.node)
+  const prods = data.products.edges
+                  .map(edge => edge.node)
+                  .filter(p => p.variants[0].inventory_quantity > 0)
 
   return (
     <div className='gallery' id='gallery'>
       <SearchEngineOptimization title="Products" />
       {/* only output products with inventory*/}
-      {prods
-        .filter(p => p.variants[0].inventory_quantity > 0)
-        .map(p => {
-          return <ProductListItem product={p} key={p.handle} />
-        })}
+      {prods.map((p, i) => <ProductListItem product={p} key={p.handle}
+                                            prodCount={prods.length} prodPosition={i} /> )}
     </div>
   )
 }
+
 export const query = graphql`
   query {
     products: allMedusaProducts {
