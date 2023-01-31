@@ -54,11 +54,14 @@ body {
 	opacity: 0;
 }
 .gallery-item-order {
-	align-items: end;
+	align-items: center;
 	bottom: 4px;
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
+	gap: 12px;
+	justify-content: right;
 	position: absolute;
+	max-width: 140px;
 	right: 16px;
 }
 .gallery-item-order-stock {
@@ -74,11 +77,17 @@ body {
 	font-size: 20px;
 	padding: 8px;
 }
+.gallery-item-order-cart {
+	flex-basis: 100%;
+	font-size: 18px;
+	margin: 0;
+	text-align: right;
+}
 .gallery-item-order-remove {
 	background: none;
 	cursor: pointer;
 	border: none;
-	margin-bottom: 16px;
+	font-size: 18px;
 	text-decoration: underline;
 	width: fit-content;
 }
@@ -104,4 +113,10 @@ body {
 }
 .gallery-item-page-control--up {
 	cursor: n-resize;
+}
+
+@media only screen and (min-width: 350px) {
+	.gallery-item-order {
+		max-width: 220px;
+	}
 }

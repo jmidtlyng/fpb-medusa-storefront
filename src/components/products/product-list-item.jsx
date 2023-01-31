@@ -97,22 +97,20 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
       }
       <div className="gallery-item-order">
         {itemIsInCart &&
+          <p className="gallery-item-order-cart"># in cart: {quantityInCart}</p>
+        }
+        {itemIsInCart &&
           <button className="gallery-item-order-remove"
                   onClick={() => handleRemoveFromCart()}
                   disabled={loading}>
-            Remove from order
+            Remove
           </button>
         }
-        <div>
-          {itemIsInCart &&
-            <span style={{padding: '8px'}}>{quantityInCart}</span>
-          }
-          <button className="gallery-item-order-add"
-                  onClick={() => handleAddToCart()}
-                  disabled={loading || !inventoryIsRemaining}>
-            Add to order
-          </button>
-        </div>
+        <button className="gallery-item-order-add"
+                onClick={() => handleAddToCart()}
+                disabled={loading || !inventoryIsRemaining}>
+          Add to order
+        </button>
       </div>
     </div>
   )
