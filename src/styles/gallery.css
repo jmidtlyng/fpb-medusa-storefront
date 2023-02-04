@@ -114,6 +114,22 @@ body {
 .gallery-item-page-control--up {
 	cursor: n-resize;
 }
+.cart-cta {
+	background: #fff;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
+
+.cart-cta-cnt {
+	bottom: 0;
+	color: #000;
+	font-weight: bold;
+	font-size: 14px;
+	left: 0;
+	position: absolute;
+	text-decoration: none;
+}
 
 @media only screen and (min-width: 350px) {
 	.gallery-item-order {
