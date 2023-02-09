@@ -1,4 +1,5 @@
 import React from "react"
+import "../../styles/theme.css"
 
 const CheckoutLayout = ({ children }) => {
   return (
