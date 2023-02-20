@@ -154,7 +154,9 @@ exports.createPages = async function ({ actions, graphql }) {
       context: { id: node.id },
     })
   })
-
+  
+  /*
+  // products page is homepage. this also fails if products dont have description, weight, or one option
   data.allMedusaRegions.edges.forEach(({ node }) => {
     const { id, name, currency_code, tax_rate } = node
     const kebabCasedName = toKebabCase(name)
@@ -173,6 +175,7 @@ exports.createPages = async function ({ actions, graphql }) {
       })
     })
   })
+  */
 
   const products = data.allMedusaProducts.edges.map(({ node }) => node)
 

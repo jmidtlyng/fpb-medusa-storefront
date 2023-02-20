@@ -8,7 +8,7 @@ const CartCta = () => {
 		<div className='cart-cta'>
 			<Link to="/checkout">
 				{cart.items.reduce((sum, i) => sum + i.quantity, 0)} items in your cart.<br/>
-				<span class='link-style'>Click here to checkout.</span>
+				<span className='link-style'>Click here to checkout.</span>
 			</Link>
 		</div>
 	)

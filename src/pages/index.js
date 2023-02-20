@@ -10,8 +10,9 @@ const IndexPage = ({ data }) => {
   // const { products, collections } = data
   const prods = data.products.edges
                   .map(edge => edge.node)
-                  .filter(p => p.variants[0].inventory_quantity > 0)
-
+                  .filter(p => p.variants[0].inventory_quantity > 0
+                                && p.status === 'published')
+  
   return (
     <div>
       <div className='gallery' id='gallery'>
@@ -33,6 +34,7 @@ export const query = graphql`
           handle
           title
           collection_id
+          status
           thumbnail {
             childImageSharp {
               gatsbyImageData
