@@ -36,14 +36,30 @@ body {
 	display: inline-block;
 }
 .gallery-item-display {
-	display: flex;
+	display: block;
 	height: calc(100% - 122px);
-	scroll-snap-align: start;
+	overflow-x: scroll;
+	position: relative;
+	scroll-snap-type: x mandatory;
 	top: 4px;
 	width: 100%;
 }
+.gallery-item-display-slider {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	position: absolute
+}
+.gallery-item-display-slider-img {
+	transition: opacity 1s;
+	display: block;
+	height: 100%;
+	margin: auto;
+	scroll-snap-align: start;
+	width: 100vw;
+}
 /* .gallery-item-display-drawing, */
-.gallery-item-display-photo {
+.gallery-item-display-slider-img img {
 	transition: opacity 1s;
 	display: block;
 	margin: auto;

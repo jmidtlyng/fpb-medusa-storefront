@@ -11,6 +11,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   } = useCart()
   // just use first variant. Going for simple design, 1 var/prod
   const variant = product.variants[0]
+  const images = product.images
   
   // find variant in cart
   const cartItem = cart.items.find(i => i.variant.id === variant.id)
@@ -60,6 +61,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
                           left: 0,
                           behavior: 'smooth' })
   }
+  console.log(product)
 
   return (
     <div className='gallery-item'>
@@ -69,9 +71,15 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
         </p>
       </div>
       <div className='gallery-item-display'>
-        <img src={getSrc(product.thumbnail)}
-            alt={product.title}
-            className="gallery-item-display-photo"/>
+        <div className='gallery-item-display-slider'>
+          {images.map((img, i) => 
+              <div className="gallery-item-display-slider-img">
+                <img src={img.url}
+                    alt={product.title}
+                    loading="lazy"/>
+              </div>
+            )}
+        </div>
       </div>
       {prodCount > 1 &&
         <div className="gallery-item-page">

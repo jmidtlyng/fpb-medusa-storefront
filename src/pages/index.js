@@ -35,6 +35,14 @@ export const query = graphql`
           title
           collection_id
           status
+          images {
+            url
+            image {
+              childImageSharp {
+                gatsbyImageData
+              }
+            }
+          }
           thumbnail {
             childImageSharp {
               gatsbyImageData
