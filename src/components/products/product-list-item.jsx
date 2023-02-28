@@ -1,7 +1,6 @@
 import React from "react"
 import { useCart } from "../../hooks/use-cart"
 import { formatPrice } from "../../utils/format-price"
-import { getSrc } from "gatsby-plugin-image"
 
 const ProductListItem = ({ product, prodCount, prodPosition }) => {
   const {
@@ -9,6 +8,9 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
     cart,
     actions: { addItem, removeItem },
   } = useCart()
+  
+  // console.log(cart)
+  // console.log(product)
   // just use first variant. Going for simple design, 1 var/prod
   const variant = product.variants[0]
   const images = product.images
@@ -24,17 +26,19 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   const lastPosition = prodPosition === prodCount - 1
     
   // check cart. if there are items in the cart then show cart item count
-  const quantityInCart = typeof cartItem == 'undefined' ? '' : cartItem.quantity
+  const quantityInCart = typeof cartItem == 'undefined' ? 0 : cartItem.quantity
   const inventoryIsRemaining = variant.inventory_quantity > quantityInCart
   const itemIsInCart = quantityInCart > 0
   
   // pick out specific variant and only ever increase quant by 1                  
   const handleAddToCart = async () => {
+    console.log('got here')
     // only add to cart if there is inventory to add to the cart
     if(inventoryIsRemaining){
+      console.log('passed condition')
       await addItem({ variant_id: variant.id, quantity: 1 })
     }
-  }                
+  }
   const handleRemoveFromCart = async () => {
     // if only one item in cart, remove entirely. otherwise decrease quantity by 1
     if(quantityInCart === 1) {
@@ -61,7 +65,6 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
                           left: 0,
                           behavior: 'smooth' })
   }
-  console.log(product)
 
   return (
     <div className='gallery-item'>
@@ -73,7 +76,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
       <div className='gallery-item-display'>
         <div className='gallery-item-display-slider'>
           {images.map((img, i) => 
-              <div className="gallery-item-display-slider-img">
+              <div key={i} className="gallery-item-display-slider-img">
                 <img src={img.url}
                     alt={product.title}
                     loading="lazy"/>
