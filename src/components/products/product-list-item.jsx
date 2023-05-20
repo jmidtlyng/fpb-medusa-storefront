@@ -120,6 +120,21 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
             )}
         </div>
       </div>
+      {images.length > 1 &&
+        <div className='gallery-item-image-dots'>
+          {images.map((img, i) => 
+            <svg xmlns="http://www.w3.org/2000/svg" key={i}
+                  width="24" height="24" viewBox="0 0 24 24">
+              {i == 0 &&
+                <path fill="#000000" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2z"></path>
+              }
+              {i > 0 &&
+                <path fill="#000000" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8z"></path>
+              }
+            </svg>
+          )}
+        </div>
+      }
       {prodCount > 1 &&
         <div className="gallery-item-page">
           <p>Design { prodPosition + 1} of { prodCount }</p>

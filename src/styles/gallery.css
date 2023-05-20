@@ -144,6 +144,7 @@ body {
 .gallery-item-image-control {
 	background: transparent;
 	border: 0;
+	display: none;
 	padding: 0;
 	position: absolute;
 	top: 50%;
@@ -157,6 +158,11 @@ body {
 .gallery-item-image-control--left {
 	right: 0;
 	left: 50%;
+}
+.gallery-item-image-dots {
+	bottom: 80px;
+	left: 50%;
+	position: absolute;
 }
 .cart-cta {
 	background: transparent;
@@ -183,5 +189,8 @@ body {
 @media only screen and (min-width: 350px) {
 	.gallery-item-order {
 		max-width: 220px;
+	}
+	.gallery-item-image-control {
+		display: block;
 	}
 }

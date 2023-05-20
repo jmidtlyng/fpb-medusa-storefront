@@ -22,10 +22,8 @@ const CheckoutItem = ({ item, currencyCode }) => {
           </div>
         </div>
         <div>
-          <p>
-            <p className="font-medium">
-              {formatPrice(item.unit_price, currencyCode, 1)}
-            </p>
+          <p className="font-medium">
+            {formatPrice(item.unit_price, currencyCode, 1)}
           </p>
         </div>
       </div>
