@@ -102,9 +102,14 @@ body {
 	color: #fff;
 	cursor: pointer;
 	font-size: 20px;
-	padding: 8px;
+	padding: 10px;
 }
 .gallery-item-order-cart {
+	display: flex;
+	gap: 0 12px;
+	min-width: 160px;
+}
+.gallery-item-order-cart-qty {
 	flex-basis: 100%;
 	font-size: 18px;
 	margin: 0;
@@ -161,8 +166,10 @@ body {
 }
 .gallery-item-image-dots {
 	bottom: 80px;
-	left: 50%;
+	display: flex;
+	justify-content: center;
 	position: absolute;
+	width: 100%;
 }
 .cart-cta {
 	background: transparent;
@@ -190,6 +197,13 @@ body {
 	.gallery-item-order {
 		max-width: 220px;
 	}
+	.gallery-item-order-cart {
+		display: block;
+		min-width: auto;
+	}
+}
+
+@media only screen and (min-width: 481px) {
 	.gallery-item-image-control {
 		display: block;
 	}

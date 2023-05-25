@@ -67,21 +67,47 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   }
   
   // gallery image ui scroll
-  const scrollToNextImg = () => {
+  const scrollToNextImg = e => {
     // parent el
-    const el_gallery = document.getElementById('gallery')
+    const el = e.target
+    const el_imgGallery = el.closest('.gallery-item-display')
     
-    el_gallery.scrollBy({ top: 0,
-                          left: el_gallery.clientWidth,
-                          behavior: 'smooth' });
-  }
-  const scrollToPrevImg = () => {
-    // parent el
-    const el_gallery = document.getElementById('gallery')
-    
-    el_gallery.scrollBy({ top: 0,
-                          left: -el_gallery.clientWidth,
+    el_imgGallery.scrollBy({ top: 0,
+                          left: el_imgGallery.clientWidth,
                           behavior: 'smooth' })
+    
+    // adjust dots
+    adjustImgDotRight(el)
+  }
+  const scrollToPrevImg = e => {
+    // parent el
+    const el = e.target
+    const el_imgGallery = e.target.closest('.gallery-item-display')
+    
+    el_imgGallery.scrollBy({ top: 0,
+                          left: -el_imgGallery.clientWidth,
+                          behavior: 'smooth' })
+    
+    // adjust dots
+    adjustImgDotLeft(el)
+  }
+  
+  const adjustImgDotRight = el => {
+    const el_product = el.closest('.gallery-item')
+    const el_dots = el_product.getElementsByClassName('gallery-item-image-dots')[0]
+    // get last child
+    const el_lastDot = el_dots.children[el_dots.children.length - 1]
+    // set last empty dot to first position to move filled dot right
+    el_dots.prepend(el_lastDot)
+  }
+  
+  const adjustImgDotLeft = el => {
+    const el_product = el.closest('.gallery-item')
+    const el_dots = el_product.getElementsByClassName('gallery-item-image-dots')[0]
+    // get first child
+    const el_firstDot = el_dots.children[0]
+    // set first empty dot to last position to move filled dot left
+    el_dots.appendChild(el_firstDot)
   }
 
   return (
@@ -101,7 +127,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
                 {images.length > 0 && images.length - 1 > i &&
                   <button className="gallery-item-image-control gallery-item-image-control--right"
                           style={{transform: 'rotate(-90deg)'}}
-                          onClick={() => scrollToNextImg()}>
+                          onClick={scrollToNextImg}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
                       <path d="M8.2 275.4c0-8.6 3.4-17.401 10-24.001 13.2-13.2 34.8-13.2 48 0l451.8 451.8 445.2-445.2c13.2-13.2 34.8-13.2 48 0s13.2 34.8 0 48L542 775.399c-13.2 13.2-34.8 13.2-48 0l-475.8-475.8c-6.8-6.8-10-15.4-10-24.199z"/>
                     </svg>
@@ -110,7 +136,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
                 {i > 0 &&
                   <button className="gallery-item-image-control gallery-item-page-control--left"
                           style={{transform: 'rotate(90deg)'}}
-                          onClick={() => scrollToPrevImg()}>
+                          onClick={scrollToPrevImg}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
                       <path d="M8.2 275.4c0-8.6 3.4-17.401 10-24.001 13.2-13.2 34.8-13.2 48 0l451.8 451.8 445.2-445.2c13.2-13.2 34.8-13.2 48 0s13.2 34.8 0 48L542 775.399c-13.2 13.2-34.8 13.2-48 0l-475.8-475.8c-6.8-6.8-10-15.4-10-24.199z"/>
                     </svg>
@@ -125,7 +151,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
           {images.map((img, i) => 
             <svg xmlns="http://www.w3.org/2000/svg" key={i}
                   width="24" height="24" viewBox="0 0 24 24">
-              {i == 0 &&
+              {i === 0 &&
                 <path fill="#000000" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2z"></path>
               }
               {i > 0 &&
@@ -159,14 +185,14 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
       }
       <div className="gallery-item-order">
         {itemIsInCart &&
-          <p className="gallery-item-order-cart">{quantityInCart} in cart</p>
-        }
-        {itemIsInCart &&
-          <button className="gallery-item-order-remove"
-                  onClick={() => handleRemoveFromCart()}
-                  disabled={loading}>
-            Remove
-          </button>
+          <div className="gallery-item-order-cart">
+            <p className="gallery-item-order-cart-qty">{quantityInCart} in cart</p>
+            <button className="gallery-item-order-remove"
+                    onClick={() => handleRemoveFromCart()}
+                    disabled={loading}>
+              Remove
+            </button>
+          </div>
         }
         <button className="gallery-item-order-add"
                 onClick={() => handleAddToCart()}
