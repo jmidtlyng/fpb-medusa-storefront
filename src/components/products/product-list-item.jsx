@@ -67,45 +67,19 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   // gallery image ui scroll
   const scrollToNextImg = e => {
     // parent el
-    const el = e.target
     const el_imgGallery = el.closest('.gallery-item-display')
     
     el_imgGallery.scrollBy({ top: 0,
                           left: el_imgGallery.clientWidth,
                           behavior: 'smooth' })
-    
-    // adjust dots
-    adjustImgDotRight(el)
   }
   const scrollToPrevImg = e => {
     // parent el
-    const el = e.target
     const el_imgGallery = e.target.closest('.gallery-item-display')
     
     el_imgGallery.scrollBy({ top: 0,
                           left: -el_imgGallery.clientWidth,
                           behavior: 'smooth' })
-    
-    // adjust dots
-    adjustImgDotLeft(el)
-  }
-  
-  const adjustImgDotRight = el => {
-    const el_product = el.closest('.gallery-item')
-    const el_dots = el_product.getElementsByClassName('gallery-item-image-dots')[0]
-    // get last child
-    const el_lastDot = el_dots.children[el_dots.children.length - 1]
-    // set last empty dot to first position to move filled dot right
-    el_dots.prepend(el_lastDot)
-  }
-  
-  const adjustImgDotLeft = el => {
-    const el_product = el.closest('.gallery-item')
-    const el_dots = el_product.getElementsByClassName('gallery-item-image-dots')[0]
-    // get first child
-    const el_firstDot = el_dots.children[0]
-    // set first empty dot to last position to move filled dot left
-    el_dots.appendChild(el_firstDot)
   }
   
   const testScrollEnd = e => {
@@ -137,7 +111,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
         </p>
       </div>
       <div className='gallery-item-display'
-            onScroll={_.debounce(e => testScrollEnd(e), 200)}>
+            onScroll={_.debounce(e => testScrollEnd(e), 100)}>
         <div className='gallery-item-display-slider'>
           {images.map((img, i) => 
               <div key={i} className="gallery-item-display-slider-img">
