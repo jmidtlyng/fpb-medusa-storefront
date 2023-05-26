@@ -67,7 +67,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   // gallery image ui scroll
   const scrollToNextImg = e => {
     // parent el
-    const el_imgGallery = el.closest('.gallery-item-display')
+    const el_imgGallery = e.target.closest('.gallery-item-display')
     
     el_imgGallery.scrollBy({ top: 0,
                           left: el_imgGallery.clientWidth,
