@@ -1,6 +1,7 @@
 import React from "react"
 import { useCart } from "../../hooks/use-cart"
 import { formatPrice } from "../../utils/format-price"
+import _ from "/node_modules/lodash"
 
 const ProductListItem = ({ product, prodCount, prodPosition }) => {
   const {
@@ -9,8 +10,6 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
     actions: { addItem, removeItem },
   } = useCart()
   
-  // console.log(cart)
-  // console.log(product)
   // just use first variant. Going for simple design, 1 var/prod
   const variant = product.variants[0]
   const images = product.images
@@ -32,13 +31,12 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   
   // pick out specific variant and only ever increase quant by 1                  
   const handleAddToCart = async () => {
-    console.log('got here')
     // only add to cart if there is inventory to add to the cart
     if(inventoryIsRemaining){
-      console.log('passed condition')
       await addItem({ variant_id: variant.id, quantity: 1 })
     }
   }
+  
   const handleRemoveFromCart = async () => {
     // if only one item in cart, remove entirely. otherwise decrease quantity by 1
     if(quantityInCart === 1) {
@@ -109,6 +107,27 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
     // set first empty dot to last position to move filled dot left
     el_dots.appendChild(el_firstDot)
   }
+  
+  const testScrollEnd = e => {
+    const el = e.target
+    // get window width to compare to fulls-width image scroll position
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+    // divide scroll by total screen width to find scroll position
+    const position = Math.floor(el.scrollLeft / vw)
+    // get container and UI dots, and filled UI dot
+    const el_product = el.closest('.gallery-item')
+    const el_dots = el_product.getElementsByClassName('gallery-item-image-dots')[0]
+    const el_filledDot = el_dots.getElementsByClassName('gallery-item-image-dots--fill')[0]
+    const el_emptyDots = el_dots.querySelectorAll(':not(.gallery-item-image-dots--fill)')
+    
+    // if scrolled fully right then there is nothing to insert before so append
+    if(position === el_dots.children.length - 1){
+      el_dots.appendChild(el_filledDot)
+    } else {
+      // otherwise place before empty dot at position idx
+      el_dots.insertBefore(el_filledDot, el_emptyDots[position])
+    }
+  }
 
   return (
     <div className='gallery-item'>
@@ -117,7 +136,8 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
           { product.title } - ${formatPrice(price?.amount, '', 1)}
         </p>
       </div>
-      <div className='gallery-item-display'>
+      <div className='gallery-item-display'
+            onScroll={_.debounce(e => testScrollEnd(e), 200)}>
         <div className='gallery-item-display-slider'>
           {images.map((img, i) => 
               <div key={i} className="gallery-item-display-slider-img">
@@ -150,9 +170,11 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
         <div className='gallery-item-image-dots'>
           {images.map((img, i) => 
             <svg xmlns="http://www.w3.org/2000/svg" key={i}
+                  className={i === 0 ? 'gallery-item-image-dots--fill' : ''}
                   width="24" height="24" viewBox="0 0 24 24">
               {i === 0 &&
-                <path fill="#000000" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2z"></path>
+                <path fill="#000000"
+                      d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2z"></path>
               }
               {i > 0 &&
                 <path fill="#000000" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10s10-4.47 10-10S17.53 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8z"></path>
