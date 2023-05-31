@@ -102,7 +102,7 @@ body {
 	color: #fff;
 	cursor: pointer;
 	font-size: 20px;
-	padding: 10px;
+	padding: 12px;
 }
 .gallery-item-order-cart {
 	display: flex;
@@ -195,7 +195,7 @@ body {
 
 @media only screen and (min-width: 350px) {
 	.gallery-item-order {
-		max-width: 220px;
+		max-width: 250px;
 	}
 	.gallery-item-order-cart {
 		display: block;

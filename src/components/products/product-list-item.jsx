@@ -14,6 +14,8 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
   const variant = product.variants[0]
   const images = product.images
   
+  console.log(product)
+  
   // find variant in cart
   const cartItem = cart.items.find(i => i.variant.id === variant.id)
   // match price from currency code
@@ -94,12 +96,15 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
     const el_filledDot = el_dots.getElementsByClassName('gallery-item-image-dots--fill')[0]
     const el_emptyDots = el_dots.querySelectorAll(':not(.gallery-item-image-dots--fill)')
     
-    // if scrolled fully right then there is nothing to insert before so append
-    if(position === el_dots.children.length - 1){
-      el_dots.appendChild(el_filledDot)
-    } else {
-      // otherwise place before empty dot at position idx
-      el_dots.insertBefore(el_filledDot, el_emptyDots[position])
+    // validate previous animation completed
+    if(Array.prototype.indexOf.call(el_dots.children, el_filledDot) !== position){
+      // if scrolled fully right then there is nothing to insert before so append
+      if(position === el_dots.children.length - 1){
+        el_dots.appendChild(el_filledDot)
+      } else {
+        // otherwise place before empty dot at position idx
+        el_dots.insertBefore(el_filledDot, el_emptyDots[position])
+      }
     }
   }
 
@@ -190,11 +195,19 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
             </button>
           </div>
         }
-        <button className="gallery-item-order-add"
-                onClick={() => handleAddToCart()}
-                disabled={loading || !inventoryIsRemaining}>
-          Add to order
-        </button>
+        {variant.inventory_quantity > 0 &&
+          <button className="gallery-item-order-add"
+                  onClick={() => handleAddToCart()}
+                  disabled={loading || !inventoryIsRemaining}>
+            Add to order
+          </button>
+        }
+        {variant.inventory_quantity === 0 &&
+          <button className="gallery-item-order-add"
+                  disabled="disabled">
+            Out of stock
+          </button>
+        }
       </div>
     </div>
   )

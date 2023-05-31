@@ -10,8 +10,7 @@ const IndexPage = ({ data }) => {
   // const { products, collections } = data
   const prods = data.products.edges
                   .map(edge => edge.node)
-                  .filter(p => p.variants[0].inventory_quantity > 0
-                                && p.status === 'published')
+                  .filter(p => p.status === 'published')
   
   return (
     <div>
