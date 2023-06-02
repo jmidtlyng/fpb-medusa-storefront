@@ -10,7 +10,7 @@ const Totals = ({ cart, shippingOption }) => {
 
   const appliedDiscount = useDiscount(cart.discounts)
 
-  const currencyCode = cart.region?.currency_code || "eur"
+  const currencyCode = cart.region?.currency_code || "usd"
   const total = cart.shipping_total
     ? cart.total - cart.shipping_total + inMemoryShippingAmount
     : cart.total + inMemoryShippingAmount

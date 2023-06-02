@@ -1,7 +1,7 @@
 import React from "react"
 import ShippingOptions from "../shipping/shipping-options"
 
-const CheckoutDelivery = ({ controller, options, currencyCode = "eur" }) => {
+const CheckoutDelivery = ({ controller, options, currencyCode = "usd" }) => {
   const { setSelectedShippingMethod, selectedShippingMethod } = controller
   return (
     <div className="my-8">

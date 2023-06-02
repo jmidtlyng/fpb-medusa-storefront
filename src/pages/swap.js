@@ -13,7 +13,7 @@ const Swap = ({ location }) => {
   const [cart, setCart] = useState(undefined)
   const [loading, setLoading] = useState(true)
   const [amountDue, setAmountDue] = useState(undefined)
-  const [currencyCode, setCurrencyCode] = useState("eur")
+  const [currencyCode, setCurrencyCode] = useState("usd")
   const [taxRate, setTaxRate] = useState(0)
   const [swapItems, setSwapItems] = useState({
     additionalItems: [],

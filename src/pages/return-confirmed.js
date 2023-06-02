@@ -7,7 +7,7 @@ import { formatPrice } from "../utils/format-price"
 const ReturnConfirmed = ({ location }) => {
   const [confirmedReturn, setConfirmedReturn] = useState(undefined)
   const [items, setItems] = useState([])
-  const [currencyCode, setCurrencyCode] = useState("eur")
+  const [currencyCode, setCurrencyCode] = useState("usd")
   const [refundAmount, setRefundAmount] = useState(0)
   const [loading, setLoading] = useState(true)
 
