@@ -203,7 +203,7 @@ const ProductListItem = ({ product, prodCount, prodPosition }) => {
           </button>
         }
         {variant.inventory_quantity === 0 &&
-          <button className="gallery-item-order-add"
+          <button className="gallery-item-order-add gallery-item-order-add--sold-out"
                   disabled="disabled">
             Out of stock
           </button>
