@@ -137,8 +137,6 @@ export const query = graphql`
     product: medusaProducts(handle: { eq: $handle }) {
       id
       title
-      description
-      weight
       options {
         id
         title
